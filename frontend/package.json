@@ -1,0 +1,57 @@
+{
+  "name": "frontend",
+  "version": "1.0.0",
+  "description": "A React application",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "dependencies": {
+    "@fortawesome/free-solid-svg-icons": "^6.6.0",
+    "@fortawesome/react-fontawesome": "^0.2.2",
+    "@material-tailwind/react": "^2.1.10",
+    "@stripe/react-stripe-js": "^3.0.0",
+    "@stripe/stripe-js": "^5.1.0",
+    "apexcharts": "^3.54.1",
+    "autoprefixer": "^10.4.20",
+    "axios": "^1.7.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "jwt-decode": "^4.0.0",
+    "leaflet": "^1.9.4",
+    "mongoose": "^8.7.2",
+    "postcss": "^8.4.41",
+    "react": "^18.3.1",
+    "react-apexcharts": "^1.5.0",
+    "react-dom": "^18.3.1",
+    "react-hot-toast": "^2.4.1",
+    "react-leaflet": "^4.2.1",
+    "react-router-dom": "^6.26.1",
+    "react-scripts": "5.0.1",
+    "react-toastify": "^10.0.6",
+    "tailwindcss": "^3.4.10",
+    "web-vitals": "^4.2.3"
+  },
+  "devDependencies": {
+    "eslint-plugin-react": "^7.31.8"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

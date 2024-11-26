@@ -1,9 +1,18 @@
 import React from "react";
 import NavigationBar from "./NavigationBar";
-// import { Carousel } from "@material-tailwind/react";
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from "react-router-dom";
+import { Carousel } from "@material-tailwind/react";
 
 const Homepage = () => {
+
+  const navigate = useNavigate();
+
+  function openChat() {
+    console.log("Chat button clicked!");
+    navigate("http://localhost:3002/")
+  
+  }
+  
   return (
     <>
       <NavigationBar />
@@ -21,9 +30,9 @@ const Homepage = () => {
         {/* <div className="absolute inset-0 bg-black opacity-70 pointer-events-none z-0"></div> */}
 
         {/* Centered content */}
-        <div className="text-center text-white flex justify-center items-center flex-col relative z-10">
+        <div className="text-center text-white flex justify-center items-center flex-col relative z-11">
           <h1 className="text-6xl font-bold mb-4 animate-bounce text-white-400">
-            Welcome to Crop Auction Portal
+            Welcome to Krishi- Sahyog
           </h1>
           <a
             href="/login"
@@ -108,38 +117,53 @@ const Homepage = () => {
                 </div>
                 <div class="flex-grow">
                   <p class="leading-relaxed text-base">
-                  A dynamic platform where farmers can list and sell their crops directly to buyers.
+                    A dynamic platform where farmers can list and sell their
+                    crops directly to buyers.
                   </p>
                 </div>
               </div>
             </div>
             <div class="p-4 md:w-1/3">
-  <div class="flex rounded-lg h-full bg-gray-100 p-8 flex-col transform transition duration-300 ease-in-out hover:scale-105 hover:shadow-lg">
-    <div class="flex items-center mb-3">
-      <div class="w-8 h-8 mr-3 inline-flex items-center justify-center rounded-full bg-lightgreen text-white flex-shrink-0">
-        <img src="auction.png" alt="Icon" class="w-5 h-5 object-cover rounded-full" />
-      </div>
-      <h2 class="text-gray-900 text-lg title-font font-medium">
-        Auction Platform
-      </h2>
-    </div>
-    <div class="flex-grow">
-      <p class="leading-relaxed text-base">
-        An interactive auction system that ensures competitive pricing for every crop.
-      </p>
-    </div>
-  </div>
-</div>
-
+              <div class="flex rounded-lg h-full bg-gray-100 p-8 flex-col transform transition duration-300 ease-in-out hover:scale-105 hover:shadow-lg">
+                <div class="flex items-center mb-3">
+                  <div class="w-8 h-8 mr-3 inline-flex items-center justify-center rounded-full bg-lightgreen text-white flex-shrink-0">
+                    <img
+                      src="auction.png"
+                      alt="Icon"
+                      class="w-5 h-5 object-cover rounded-full"
+                    />
+                  </div>
+                  <h2 class="text-gray-900 text-lg title-font font-medium">
+                    Auction Platform
+                  </h2>
+                </div>
+                <div class="flex-grow">
+                  <p class="leading-relaxed text-base">
+                    An interactive auction system that ensures competitive
+                    pricing for every crop.
+                  </p>
+                </div>
+              </div>
+            </div>
 
             <div class="p-4 md:w-1/3">
               <div class="flex rounded-lg h-full bg-gray-100 p-8 flex-col transform transition duration-300 ease-in-out hover:scale-105 hover:shadow-lg">
                 <div class="flex items-center mb-3">
                   <div class="w-8 h-8 mr-3 inline-flex items-center justify-center rounded-full bg-lightgreen text-white flex-shrink-0">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z" />
-</svg>
-
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      class="size-6"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z"
+                      />
+                    </svg>
                   </div>
                   <h2 class="text-gray-900 text-lg title-font font-medium">
                     Chatbot
@@ -147,7 +171,8 @@ const Homepage = () => {
                 </div>
                 <div class="flex-grow">
                   <p class="leading-relaxed text-base">
-                  A smart assistant providing instant support and guidance for all user queries and transactions.
+                    A smart assistant providing instant support and guidance for
+                    all user queries and transactions.
                   </p>
                 </div>
               </div>
@@ -155,66 +180,6 @@ const Homepage = () => {
           </div>
         </div>
       </section>
-
-      {/* <section class="text-gray-600 body-font">
-  <div class="container px-5 py-24 mx-auto flex flex-wrap">
-    <div class="flex w-full mb-20 flex-wrap">
-      <h1 class="sm:text-3xl text-2xl font-medium title-font text-gray-900 lg:w-1/3 lg:mb-0 mb-4">Galary</h1>
-      <p class="lg:pl-6 lg:w-2/3 mx-auto leading-relaxed text-base">Whatever cardigan tote bag tumblr hexagon brooklyn asymmetrical gentrify, subway tile poke farm-to-table. Franzen you probably haven't heard of them man bun deep jianbing selfies heirloom.</p>
-    </div>
-    <div class="flex flex-wrap md:-m-2 -m-1">
-      <div class="flex flex-wrap w-1/2">
-        <div class="md:p-2 p-1 w-1/2">
-          <img alt="gallery" class="w-full object-cover h-full object-center block" src="https://dummyimage.com/500x300"/>
-        </div>
-        <div class="md:p-2 p-1 w-1/2">
-          <img alt="gallery" class="w-full object-cover h-full object-center block" src="https://dummyimage.com/501x301"/>
-        </div>
-        <div class="md:p-2 p-1 w-full">
-          <img alt="gallery" class="w-full h-full object-cover object-center block" src="https://dummyimage.com/600x360"/>
-        </div>
-      </div>
-      <div class="flex flex-wrap w-1/2">
-        <div class="md:p-2 p-1 w-full">
-          <img alt="gallery" class="w-full h-full object-cover object-center block" src="https://dummyimage.com/601x361"/>
-        </div>
-        <div class="md:p-2 p-1 w-1/2">
-          <img alt="gallery" class="w-full object-cover h-full object-center block" src="https://dummyimage.com/502x302"/>
-        </div>
-        <div class="md:p-2 p-1 w-1/2">
-          <img alt="gallery" class="w-full object-cover h-full object-center block" src="https://dummyimage.com/503x303"/>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-  <section class="text-gray-600 body-font">
-  <div class="container px-5 py-24 mx-auto">
-  <div class="text-center mb-20">
-      <h1 class="sm:text-3xl text-2xl font-medium text-center title-font text-gray-900 mb-4">Access Comprehensive Crop Statistics</h1>
-    </div>
- 
-    <div class="flex flex-wrap -m-4 text-center">
-      <div class="p-4 sm:w-1/4 w-1/2">
-        <h2 class="title-font font-medium sm:text-4xl text-3xl text-gray-900">2.7K</h2>
-        <p class="leading-relaxed">Users</p>
-      </div>
-      <div class="p-4 sm:w-1/4 w-1/2">
-        <h2 class="title-font font-medium sm:text-4xl text-3xl text-gray-900">1.8K</h2>
-        <p class="leading-relaxed">Subscribes</p>
-      </div>
-      <div class="p-4 sm:w-1/4 w-1/2">
-        <h2 class="title-font font-medium sm:text-4xl text-3xl text-gray-900">35</h2>
-        <p class="leading-relaxed">Downloads</p>
-      </div>
-      <div class="p-4 sm:w-1/4 w-1/2">
-        <h2 class="title-font font-medium sm:text-4xl text-3xl text-gray-900">4</h2>
-        <p class="leading-relaxed">Products</p>
-      </div>
-    </div>
-  </div>
-</section> */}
 
       <section class="text-gray-600 body-font">
         <div class="container px-5 py-24 mx-auto flex flex-wrap items-center">
@@ -273,7 +238,7 @@ const Homepage = () => {
         </div>
       </section>
 
-      <footer class="text-gray-600 body-font">
+      {/* <footer class="text-gray-600 body-font">
         <div class="container px-5 py-8 mx-auto flex items-center sm:flex-row flex-col">
           <a class="flex title-font font-medium items-center md:justify-start justify-center text-gray-900">
         <img src="footer_icon.png" alt="Icon" class="w-10 h-10 object-cover rounded-full" />
@@ -340,8 +305,69 @@ const Homepage = () => {
             </a>
           </span>
         </div>
-      </footer>
+      </footer> */}
+      <footer class="text-gray-600 body-font relative">
+        <div class="container px-5 py-8 mx-auto flex items-center sm:flex-row flex-col">
+          <a class="flex title-font font-medium items-center md:justify-start justify-center text-gray-900">
+            <img
+              src="footer_icon.png"
+              alt="Icon"
+              class="w-10 h-10 object-cover rounded-full"
+            />
+            <span class="ml-3 text-xl">Krishi-Sahyog</span>
+          </a>
+          <p class="text-sm text-gray-500 sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-gray-200 sm:py-2 sm:mt-0 mt-4">
+            © 2024 Krishi_Sahyog — All rights Reserved
+          </p>
+          {/* <span class="inline-flex sm:ml-auto sm:mt-0 mt-4 justify-center sm:justify-start">
+      <a class="text-gray-500">
+        <svg
+          fill="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          class="w-5 h-5"
+          viewBox="0 0 24 24"
+        >
+          <path d="M18.364 5.636l-1.414 1.414-2.121-2.121 1.414-1.414a3 3 0 114.243 4.243l-1.414-1.414a1 1 0 00-1.414 0z"></path>
+          <path d="M13.414 4l2.121 2.121-9.9 9.9a4 4 0 01-5.656-5.656l9.9-9.9 2.121 2.121-9.9 9.9a2 2 0 002.828 2.828l9.9-9.9z"></path>
+        </svg>
+      </a>
+    </span> */}
+        </div>
 
+        {/* Chatbot logo */}
+        {/* <div
+          class="fixed bottom-3 right-3 bg-lightgreen rounded-full shadow-lg cursor-pointer"
+          title="Chat with us"
+        >
+          <img src="chatbot_bg.png" alt="Chatbot Icon" class="w-20 h-20" />
+          <a
+            href="*"
+            class="text-underline font-size-sm"
+            target="_blank"
+          ></a>{" "}
+          <a
+            href="https://iconscout.com/contributors/romstu"
+            class="text-underline font-size-sm"
+            target="_blank"
+          ></a>
+        </div> */}
+
+<div
+  class="fixed bottom-3 right-3 bg-lightgreen rounded-full shadow-lg cursor-pointer flex items-center justify-center w-20 h-20"
+  title="Chat with us"
+>
+  <a
+    href="http://localhost:3002/"
+    target="_blank"
+    class="w-full h-full"
+  >
+    <img src="chatbot_bg.png" alt="Chatbot Icon" class="w-full h-full object-cover" />
+  </a>
+</div>
+
+      </footer>
     </>
   );
 };

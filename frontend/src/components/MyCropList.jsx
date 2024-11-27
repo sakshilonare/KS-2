@@ -118,8 +118,8 @@ const MyCropList = () => {
 
                             {/* Crop Details */}
                             <div className="w-2/6 pl-4">
-                                <h2 className="text-xl font-bold">{crop.cropName}</h2>
-                                <p className="text-gray-700">Type: {crop.cropType}</p>
+                                <h2 className="text-xl font-bold">{crop.crop}</h2>
+                                <p className="text-gray-700">Type: {crop.croptype}</p>
                                 <p className="text-gray-700">Price per kg: ₹{crop.pricePerKg}</p>
                                 <p className="text-gray-700">Quantity: {crop.quantity} kg</p>
                             </div>

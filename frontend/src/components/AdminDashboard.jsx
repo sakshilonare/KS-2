@@ -178,10 +178,10 @@ const AdminDashboard = () => {
             </div>
 
             {/* Charts section */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-                <div className="bg-white shadow-lg rounded-lg p-6">
+            <div className="grid grid-cols-1 md:grid-cols-1 gap-8 mb-8">
+                {/* <div className="bg-white shadow-lg rounded-lg p-6">
                     <Chart options={cropMaxBidChartOptions} series={cropMaxBidChartSeries} type="bar" height={350} />
-                </div>
+                </div> */}
                 {/* Crop Categories Donut Chart */}
                 <div className="bg-white shadow-lg rounded-lg p-6">
                     <Chart options={donutChartOptions} series={cropCategorySeries} type="donut" height={350} />

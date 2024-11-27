@@ -23,7 +23,9 @@ import MyAuctionList from './components/MyAuctionList';
 import Leaderboard from './components/LeaderBoard';
 import ProfilePage from './components/ProfilePage';
 import PaymentProofsPage from './components/PaymentProofsPage';
-
+// import ManageUsers
+import ManageUsers from './components/ManageUsers'; 
+// import ManageCrops from './components/ManageCrops';
 
 const App = () => {
   return (
@@ -65,6 +67,8 @@ const App = () => {
               <Route path="dashboard" element={<AdminDashboard />} />
               <Route path="manage-crops" element={<ManageCrops />} />
               <Route path="/admin/paymentproofs" element={<PaymentProofsPage/>} />
+               {/* <Route path="manage-crops" element={<ManageCrops />} /> */}
+              <Route path="manage-users" element={<ManageUsers />} />
             </Route>
 
           </Routes>

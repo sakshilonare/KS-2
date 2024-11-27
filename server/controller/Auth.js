@@ -1,20 +1,19 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const farmerModel = require("../models/farmerModel.js");
-const buyerModel = require("../models/buyerModel.js");
-const adminModel = require("../models/adminModel.js");
-const { sendEmail } = require("../utils/sendEmail");
+const farmerModel = require("../models/farmerModel");
+const buyerModel = require("../models/buyerModel");
+const adminModel = require("../models/adminModel");
 require("dotenv").config();
 
 // Signup route handler
 exports.signup = async (req, res) => {
   try {
     const {
-      name,
-      email,
-      password,
-      role,
-      mobile,
+      name, 
+      email, 
+      password, 
+      role, 
+      mobile, 
       address,
       dateOfBirth,
       gender,
@@ -26,7 +25,7 @@ exports.signup = async (req, res) => {
       farmingPracticesDescription,
       cropFieldImage,
       State,
-      Region,
+      Region
     } = req.body; // Destructure the request body
 
     // Ensure role is valid
@@ -57,11 +56,11 @@ exports.signup = async (req, res) => {
     // Create a new user in the respective model
     let newUser;
     if (role === "farmer") {
-      newUser = await farmerModel.create({
-        name,
-        email,
+      newUser = await farmerModel.create({ 
+        name, 
+        email, 
+        mobile: mobile, // Map mobile to mobileNumber
         password: hashedPassword, // Store the hashed password
-        mobile,
         dateOfBirth,
         gender,
         profilePicture,
@@ -73,25 +72,25 @@ exports.signup = async (req, res) => {
         cropFieldImage,
         State,
         Region,
-        role,
+        role // Include role
       });
     } else if (role === "buyer") {
-      newUser = await buyerModel.create({
-        name,
-        email,
+      newUser = await buyerModel.create({ 
+        name, 
+        email, 
         password: hashedPassword, // Store the hashed password
-        role,
-        mobile,
-        address,
+        role, 
+        mobile: mobile, // Include mobile
+        address 
       });
     } else if (role === "admin") {
-      newUser = await adminModel.create({
-        name,
-        email,
+      newUser = await adminModel.create({ 
+        name, 
+        email, 
         password: hashedPassword, // Store the hashed password
-        role,
-        mobile,
-        address,
+        role, 
+        mobile: mobile, // Include mobile
+        address // Include address
       });
     }
 
@@ -100,7 +99,7 @@ exports.signup = async (req, res) => {
       message: `${role.charAt(0).toUpperCase() + role.slice(1)} created successfully.`,
     });
   } catch (error) {
-    console.error("Signup Error:", error); // Detailed error logging
+    console.error('Signup Error:', error); // More detailed error logging
     return res.status(500).json({
       success: false,
       message: "Error during signup.",
@@ -109,10 +108,12 @@ exports.signup = async (req, res) => {
 };
 
 
+
 exports.login = async (req, res) => {
   try {
     const { email, password, role } = req.body;
 
+    // Validate that all fields are provided
     if (!email || !password || !role) {
       return res.status(400).json({
         success: false,
@@ -120,100 +121,138 @@ exports.login = async (req, res) => {
       });
     }
 
+    // Find the user in the respective model
     let user;
-    if (role === "admin") {
-      user = await adminModel.findOne({ email });
-    } else if (role === "farmer") {
+    if (role === "farmer") {
       user = await farmerModel.findOne({ email });
     } else if (role === "buyer") {
       user = await buyerModel.findOne({ email });
+    } else if (role === "admin") {
+      user = await adminModel.findOne({ email });
     } else {
-      return res.status(400).json({ success: false, message: "Invalid role." });
+      return res.status(400).json({
+        success: false,
+        message: "Invalid role specified.",
+      });
     }
 
+    // Check if the user exists
     if (!user) {
-      return res.status(401).json({ success: false, message: "User not found." });
+      return res.status(401).json({
+        success: false,
+        message: "User not found.",
+      });
     }
 
-    // Password comparison
+    // Check if the user is blocked
+    if (user.isBlocked) {
+      return res.status(403).json({
+        success: false,
+        message: "Your account has been blocked. Please contact support.",
+      });
+    }
+
+    // Compare the password
     const passwordMatch = await bcrypt.compare(password, user.password);
     if (!passwordMatch) {
-      return res.status(403).json({ success: false, message: "Password incorrect." });
+      return res.status(403).json({
+        success: false,
+        message: "Password incorrect.",
+      });
     }
 
-    // Generate JWT token
-    const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, {
-      expiresIn: "2h",
-    });
+    // Generate JWT
+    const payload = {
+      id: user._id,
+      role: user.role, // Use the role from the user object
+    };
 
-    // Send email after successful login
-    const subject = `Welcome Back, ${user.name}!`;
-    let message;
+    const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "2h" });
 
-    // Custom email message based on role
+    // If the role is farmer, store the token in the farmer's document
     if (role === "farmer") {
-      message = `
-        Dear ${user.name},
-        
-        You have successfully logged into **KrishiSahyog** as a farmer.
-
-        Here are your details:
-        - Name: ${user.name}
-        - Email: ${user.email}
-        - Role: Farmer
-        - Farm Address: ${user.farmAddress || "Not provided"}
-        - Farm Size: ${user.farmSize || "Not provided"}
-        
-        If you need any help, feel free to contact us at xyz@gmail.com.
-
-        Best regards,
-        KS-Team
-      `;
-    } else if (role === "buyer") {
-      message = `
-        Dear ${user.name},
-        
-        You have successfully logged into **KrishiSahyog** as a buyer.
-
-        Here are your details:
-        - Name: ${user.name}
-        - Email: ${user.email}
-        - Role: Buyer
-        
-        We are excited to have you participate in our auctions. If you need any assistance, feel free to contact us at xyz@gmail.com.
-
-        Best regards,
-        KS-Team
-      `;
-    } else if (role === "admin") {
-      message = `
-        Dear ${user.name},
-        
-        You have successfully logged into **KrishiSahyog** as an admin.
-
-        Here are your details:
-        - Name: ${user.name}
-        - Email: ${user.email}
-        - Role: Admin
-        
-        If you have any issues or need further assistance, please contact xyz@gmail.com.
-
-        Best regards,
-        KS-Team
-      `;
+      user.famer_token = token; // Assuming your farmer model has a 'famer_token' field
+      await user.save(); // Save the updated farmer model with the token
     }
 
-    // Send the email
-    await sendEmail({ email: user.email, subject, message });
+    // Remove password from user object before sending response
+    const userResponse = user.toObject();
+    userResponse.password = undefined;
+
+    // Set the token in a cookie
+    const options = {
+      expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000), // 3 days
+      httpOnly: true,
+    };
+
+    return res
+      .cookie("authCookie", token, options)
+      .status(200)
+      .json({
+        success: true,
+        token,
+        user: userResponse,
+        message: `${role.charAt(0).toUpperCase() + role.slice(1)} logged in successfully.`,
+      });
+  } catch (error) {
+    console.error("Login Error:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Login failed.",
+    });
+  }
+};
+
+exports.blockUser = async (req, res) => {
+  const { userId, userType } = req.body;
+
+  if (!userId || !userType) {
+    return res.status(400).json({
+      success: false,
+      message: "Missing required fields: userId or userType.",
+    });
+  }
+
+  if (userType !== "farmer" && userType !== "buyer") {
+    return res.status(400).json({
+      success: false,
+      message: "Invalid userType. Must be 'farmer' or 'buyer'.",
+    });
+  }
+
+  const Model = userType === "farmer" ? farmer : buyer;
+  const user = await Model.findById(userId);
+
+  if (!user) {
+    return res.status(404).json({
+      success: false,
+      message: `${userType} not found.`,
+    });
+  }
+
+  try {
+    // Attempt to block/unblock the user
+    user.isBlocked = true;
+    await user.save({ validateModifiedOnly: true });
 
     return res.status(200).json({
       success: true,
-      token,
-      message: `${role.charAt(0).toUpperCase() + role.slice(1)} logged in successfully.`,
+      message: `${userType} has been blocked successfully.`,
     });
   } catch (error) {
-    console.error("Login Error:", error);
-    return res.status(500).json({ success: false, message: "Login failed." });
+    if (error.name === 'ValidationError') {
+      // Specific validation error handling
+      return res.status(400).json({
+        success: false,
+        message: `Validation error: ${error.message}`,
+      });
+    } else {
+      return res.status(500).json({
+        success: false,
+        message: "An unexpected error occurred.",
+        error: error.message,
+      });
+    }
   }
 };
 

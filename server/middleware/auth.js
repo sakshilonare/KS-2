@@ -81,3 +81,5 @@ const checkRole = (role) => (req, res, next) => {
 exports.isFarmer = checkRole("farmer");
 exports.isBuyer = checkRole("buyer");
 exports.isAdmin = checkRole("admin");
+
+// Block/Unblock User Middleware

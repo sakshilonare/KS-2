@@ -83,7 +83,9 @@ const farmerSchema = new mongoose.Schema({
     farmer_token:{
         type:String,
 
-    }
+    },
+    isBlocked: { type: Boolean, default: false }
+
 });
 
 // Create the Farmer model

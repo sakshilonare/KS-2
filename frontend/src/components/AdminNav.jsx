@@ -65,7 +65,7 @@ const AdminNav = () => {
                     </li>
                     <li>
                         <button
-                            onClick={() => navigate('/admin/block-unblock-users')}
+                            onClick={() => navigate('/admin/manage-users')}
                             className="hover:text-gray-300"
                         >
                             Block/Unblock Users

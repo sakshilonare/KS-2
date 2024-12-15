@@ -10,6 +10,7 @@ const auctionRoute=require('./routes/auctionRoute.js');
 const commissionRoute=require('./routes/commissionRouter.js');
 const {endedAuctionCron} = require("./automation/endedAuctionCron.js");
 const {verifyCommissionCron} = require("./automation/verifyCommissionCron.js");
+const chatbot = require("./routes/chatRoute.js")
 
 const cors = require('cors');
 require('dotenv').config();
@@ -19,11 +20,11 @@ const PORT = process.env.PORT || 3000;
 const cookieParser = require("cookie-parser");
 app.use(cookieParser());
 // Middleware for file upload
-const fileupload = require('express-fileupload');
-app.use(fileupload({
-    useTempFiles: true,
-    tempFileDir: '/tmp/',
-}));
+// const fileupload = require('express-fileupload');
+// app.use(fileupload({
+//     useTempFiles: true,
+//     tempFileDir: '/tmp/',
+// }));
 
 // CORS configuration
 const corsOptions = {
@@ -60,6 +61,7 @@ app.use('/api/admin', adminRoute);
 app.use('/api/farmer', farmerRoute);
 app.use('/api/auction', auctionRoute);
 app.use('/api/commission', commissionRoute);
+app.use('/api/chatbot', chatbot);
 
 endedAuctionCron();
 verifyCommissionCron();

@@ -23,6 +23,8 @@ import MyAuctionList from './components/MyAuctionList';
 import Leaderboard from './components/LeaderBoard';
 import ProfilePage from './components/ProfilePage';
 import PaymentProofsPage from './components/PaymentProofsPage';
+import Chat from './components/Chat';
+import ManageUsers from './components/ManageUsers';
 
 
 const App = () => {
@@ -35,6 +37,7 @@ const App = () => {
             <Route path="/" element={<Homepage />} />
             <Route path="/registration" element={<Registration />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/chat" element={<Chat/>} />
             <Route path="/feedback" element={<Feedback />} />
             <Route path="/cropform" element={<CropForm />} />
             <Route path="/auction/leaderboard/:auctionId" element={<Leaderboard />} />
@@ -65,6 +68,7 @@ const App = () => {
               <Route path="dashboard" element={<AdminDashboard />} />
               <Route path="manage-crops" element={<ManageCrops />} />
               <Route path="/admin/paymentproofs" element={<PaymentProofsPage/>} />
+              <Route path="manage-users" element={<ManageUsers />} />
             </Route>
 
           </Routes>

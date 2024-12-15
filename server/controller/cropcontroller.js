@@ -1,58 +1,75 @@
 const Crop = require('../models/cropModel');
 const cloudinary = require("cloudinary").v2;
 const jwt = require('jsonwebtoken'); // Ensure this is imported at the top of your file
+const upload = require('../config/upload');
 
 
-exports.createCrop = async (req, res) => {
+exports.createCrop = async (req, res, next) => {
     try {
-        // Check if imageFile exists in the request
-        if (!req.files || !req.files.imageFile) {
-            return res.status(400).json({ success: false, message: 'Image file is required' });
-        }
+        // Ensure image is uploaded
+        upload.single('imageFile')(req, res, async (err) => {
+            if (err) {
+                return next(new ErrorHandler("File upload error: " + err.message, 400));
+            }
 
-        const file = req.files.imageFile;
+            // Check if image is uploaded
+            if (!req.file) {
+                return next(new ErrorHandler("Crop image is required.", 400));
+            }
 
-        // Validation for supported file types
-        const supportedTypes = ["jpg", "jpeg", "png"];
-        const fileType = file.name.split('.').pop().toLowerCase();
+            // Validate fields in the request body
+            const { crop, croptype, email, harvestdate, season, state, pricePerKg, quantity, soiltype, region, description } = req.body;
+            if (!crop || !croptype || !email || !harvestdate || !season || !state || !pricePerKg || !quantity || !soiltype || !region || !description) {
+                return next(new ErrorHandler("Please provide all crop details.", 400));
+            }
 
-        if (!isFileTypeSupported(fileType, supportedTypes)) {
-            return res.status(400).json({ success: false, message: 'File format not supported' });
-        }
+            const token = req.headers.authorization && req.headers.authorization.split(' ')[1];
+            if (!token) {
+                return res.status(403).json({ message: "No token provided, authorization denied" });
+            }
 
-        const token = req.headers.authorization && req.headers.authorization.split(' ')[1];
-        if (!token) {
-            return res.status(403).json({ message: "No token provided, authorization denied" });
-        }
+            // Verify token and extract farmer ID
+            const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+            const farmerId = decodedToken.id;
 
-        // Verify token and extract farmer ID
-        const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
-        const farmerId = decodedToken.id;
+            // Upload image to Cloudinary
+            const cloudinaryResponse = await cloudinary.uploader.upload(req.file.path, {
+                folder: "CROP_IMAGES", // Specify the Cloudinary folder
+                resource_type: "auto",
+            });
 
-        // Upload to Cloudinary
-        const response = await uploadFileToCloudinary(file, "krishisahyog");
+            if (!cloudinaryResponse || cloudinaryResponse.error) {
+                console.error("Cloudinary error:", cloudinaryResponse.error || "Unknown error");
+                return next(new ErrorHandler("Failed to upload crop image to Cloudinary.", 500));
+            }
 
-        // Add all details from req.body to the database
-        const crop = await Crop.create({
-            ...req.body,
-             farmer: farmerId,
-            cropimage1: response.secure_url // Save the image URL
-        });
+            // Save crop details to the database
+            const cropItem = await Crop.create({
+                crop,
+                croptype,
+                email,
+                harvestdate,
+                season,
+                state,
+                pricePerKg,
+                quantity,
+                soiltype,
+                region,
+                description,
+                farmer: farmerId,
+                cropimage1: cloudinaryResponse.secure_url, // Save the image URL from Cloudinary
+            });
 
-        res.status(201).json({
-            success: true,
-            data: crop,
-            message: 'Crop created successfully'
+            return res.status(201).json({
+                success: true,
+                message: 'Crop created successfully',
+                crop: cropItem,
+            });
         });
     } catch (error) {
-        res.status(500).json({
-            success: false,
-            data: "Internal server error",
-            message: error.message
-        });
+        return next(new ErrorHandler(error.message || "Internal server error", 500));
     }
 };
-
 exports.deleteCrop = async (req, res) => {
     try {
         const crop = await Crop.deleteOne({ _id: req.params.id }); // Delete crop by ID

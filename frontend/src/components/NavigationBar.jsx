@@ -9,7 +9,7 @@ const NavigationBar = () => {
   };
 
   return (
-    <header className="bg-green-700 text-white py-4 fixed top-0 left-0 w-full z-10">
+    <header className="bg-green-700 text-white py-4 fixed top-0 left-0 w-full z-20">
       <div className="container mx-auto flex justify-between items-center">
         <h1 className="text-4xl font-bold">Krishi-Sahyog</h1>
         <nav>

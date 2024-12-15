@@ -214,22 +214,28 @@ const Homepage = () => {
         </div>
       </section>
 
-      <div id="bot" class="fixed bottom-4 right-4">
+      {/* Sakshi's code */}
+      {/* <div id="bot" class="fixed bottom-4 right-4">
         <Link to="/chat">
-        <button class="group relative" href="/chat">
+        <button class="group relative bg-green-600 rounded-full" href="http://localhost:3002">
           <img
-            src="bot.png"
-            alt="bot"
-            class="w-20 h-20 object-cover rounded-full group-hover:hidden"
-          />
-          <img
-            src="bot.gif"
-            alt="bot-hover"
-            class="w-20 h-20 object-cover rounded-full hidden group-hover:block"
+            src="chatbot_bg.png"
+            class="w-20 h-20 object-cover rounded-full"
           />
         </button>
         </Link>
-      </div>
+      </div> */}
+
+      <div id="bot" class="fixed bottom-4 right-4">
+  <a href="http://localhost:3002" target="_blank">
+    <button class="group relative bg-green-600 rounded-full">
+      <img
+        src="chatbot_bg.png"
+        class="w-20 h-20 object-cover rounded-full"
+      />
+    </button>
+  </a>
+</div>
       <footer class="text-gray-600 body-font">
         <div class="container px-5 py-8 mx-auto flex items-center sm:flex-row flex-col">
           <a class="flex title-font font-medium items-center md:justify-start justify-center text-gray-900">
